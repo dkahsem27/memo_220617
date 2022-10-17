@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+/* reset */
+label {margin-bottom: 0;}
+
+/* header */
+#header {height: 100px; padding: 0 20px; background: #eee;}
+#header h1 {margin-bottom: 0;}
+
+/* footer */
+#footer {height: 80px; background: #eee; text-align: center;}
+#footer .copyright {font-size: 14px;}
+
+/* contents */
+#contents {padding: 100px 0;}
+.form-outer {margin: 0 auto;}
+.form-outer button, .form-outer a {display: block; width: 100%;}
+.form-box .noti {font-size: 12px; margin-left: 120px;}
+.form-group label {min-width: 120px; font-weight: 700; color: #666;}
