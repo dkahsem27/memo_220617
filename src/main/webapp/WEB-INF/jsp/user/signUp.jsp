@@ -4,7 +4,7 @@
 	<div class="form-outer col-5">
 	  <div class="form-box">
 	    <div class="form-group mb-2 d-flex align-items-center">
-	      <label for="loginID">아이디</label>
+	      <label for="loginId">아이디</label>
 	      <input type="text" name="loginId" id="loginId" class="form-control">
 	      <button type="button" id="loginIdCheckBtn" class="btn btn-dark col-3 ml-2">중복확인</button>
 	    </div>
@@ -40,9 +40,9 @@
 $(document).ready(function() {
 	// 중복 확인
 	$('#loginIdCheckBtn').on('click', function() {
-		let loginID = $('#loginId').val().trim();
+		let loginId = $('#loginId').val().trim();
 		
-		if (loginID.length < 4) {
+		if (loginId.length < 4) {
 			// 4자 이하일 때 경고문구 노출하고 끝낸다
 			$('#idCheckLength').removeClass('d-none'); // 경고문구 노출
 			$('#idCheckDuplicated').addClass('d-none'); // 숨김
@@ -53,7 +53,7 @@ $(document).ready(function() {
 		// ajax 중복 확인
 		$.ajax({
 			url:"/user/is_duplicated_id"
-			, data:{"loginID":loginID}
+			, data:{"loginId":loginId}
 		
 			, success:function(data) {
 				if (data.result) {
