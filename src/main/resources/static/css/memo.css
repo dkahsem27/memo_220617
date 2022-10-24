@@ -19,5 +19,3 @@ a:hover {color: #000;}
 .form-outer button, .form-outer a {display: block; width: 100%;}
 .form-box .noti {font-size: 12px; margin-left: 120px;}
 .form-group label {min-width: 120px; font-weight: 700; color: #666;}
-
-.table-outer {max-width: 1000px; margin: 0 auto;}
