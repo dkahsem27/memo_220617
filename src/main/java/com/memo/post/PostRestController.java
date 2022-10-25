@@ -40,7 +40,7 @@ public class PostRestController {
 			result.put("result", "success");
 		} else {
 			result.put("code", 400); // 실패
-			result.put("errorMessage", "메모 저장에 실패했습니다. 관리자에게 문의해주세요");
+			result.put("errorMessage", "메모 저장에 실패했습니다. 관리자에게 문의해주세요.");
 		}
 		
 		return result;
