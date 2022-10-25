@@ -24,6 +24,9 @@ public class PostController {
 		}
 		
 		model.addAttribute("viewName", "post/postList");
+		
+		//List<Post> postList = PostBO.getPostList
+		//model.addAttribute("postList", postList);
 		return "template/layout";
 	}
 	
