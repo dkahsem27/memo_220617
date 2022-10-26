@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.memo.post.bo.PostBO;
 import com.memo.post.model.Post;
@@ -32,11 +33,10 @@ public class PostController {
 			return "redirect:/user/sign_in_view";
 		}
 		
-		model.addAttribute("viewName", "post/postList");
-		
-		List<Post> postList = postBO.getPostList();
+		List<Post> postList = postBO.getPostListByUserId(userId);
 		model.addAttribute("postList", postList);
 		
+		model.addAttribute("viewName", "post/postList");
 		return "template/layout";
 	}
 	
@@ -49,6 +49,27 @@ public class PostController {
 		}
 		
 		model.addAttribute("viewName", "post/postCreate");
+		return "template/layout";
+	}
+	
+	@RequestMapping("/post_detail_view")
+	public String postDetailView(
+			@RequestParam("postId") int postId,
+			HttpSession session,
+			Model model) {
+		
+		// 로그인이 됐는지 확인 -> 안됐으면 로그인 페이지로 이동
+		Integer userId = (Integer)session.getAttribute("userId");
+		if (userId == null) {
+			return "redirect:/user/sign_in_view";
+		}
+		
+		// postId에 해당하는 데이터를 가져와서 model에 담는다.
+		Post post = postBO.getPostByPostIdAndUserId(postId, userId);
+		model.addAttribute("post", post);
+		
+		// layout 화면으로 이동
+		model.addAttribute("viewName", "post/postDetail");
 		return "template/layout";
 	}
 }
