@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,14 @@ public class PostRestController {
 	@Autowired
 	private PostBO postBO;
 	
+	/**
+	 * 글쓰기 API
+	 * @param subject
+	 * @param content
+	 * @param file
+	 * @param session
+	 * @return
+	 */
 	@PostMapping("/create")
 	public Map<String, Object> create(
 			@RequestParam("subject") String subject,
@@ -41,6 +50,31 @@ public class PostRestController {
 		} else {
 			result.put("code", 400); // 실패
 			result.put("errorMessage", "메모 저장에 실패했습니다. 관리자에게 문의해주세요.");
+		}
+		
+		return result;
+	}
+	
+	@PutMapping("/update")
+	public Map<String, Object> update(
+			@RequestParam("postId") int postId,
+			@RequestParam("subject") String subject,
+			@RequestParam(value="content", required=false) String content,
+			@RequestParam(value="file", required=false) MultipartFile file,
+			HttpSession session) {
+		
+		int userId = (int)session.getAttribute("userId");
+		String userLoginId = (String)session.getAttribute("userLoginId");
+		
+		// db update
+		int count = postBO.updatePost(postId, userId, userLoginId, subject, content, file);
+		Map<String, Object> result = new HashMap<>();
+		if (count > 0) {
+			result.put("code", 100); // 성공
+			result.put("result", "success");
+		} else {
+			result.put("code", 400); // 실패
+			result.put("errorMessage", "글 수정에 실패했습니다.");
 		}
 		
 		return result;
