@@ -77,6 +77,18 @@ public class PostBO {
 	}
 	
 	public int deletePostByPostId(int postId) {
+		// 기존글 가져오기
+		Post post = getPostByPostId(postId);
+		if (post == null) { // 포스트가 없는 경우
+			log.warn("[delete post] 삭제할 게시글이 없습니다. postId:{}", postId);
+			return 0;
+		}
+		
+		// 업로드 되었던 이미지패스가 존재하면 이미지 삭제
+		if (post.getImagePath() != null) {
+			fileManagerService.deleteFile(post.getImagePath());
+		}
+		
 		return postDAO.deletePostByPostId(postId);
 	}
 }
