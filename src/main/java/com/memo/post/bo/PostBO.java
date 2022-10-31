@@ -75,4 +75,8 @@ public class PostBO {
 	public Post getPostByPostId(int postId) {
 		return postDAO.selectPostByPostId(postId);
 	}
+	
+	public int deletePostByPostId(int postId) {
+		return postDAO.deletePostByPostId(postId);
+	}
 }

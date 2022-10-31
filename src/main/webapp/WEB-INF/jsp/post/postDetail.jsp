@@ -16,7 +16,7 @@
 			<input type="file" id="file" accept=".jpg, .jpeg, .png, .gif">
 		</div>
 		<div class="d-flex justify-content-between mt-4">
-			<button type="button" id="postDeleteBtn" class="btn btn-secondary">삭제</button>
+			<button type="button" id="postDeleteBtn" class="btn btn-secondary" data-post-id="${post.id}">삭제</button>
 			<div class="d-flex">
 				<a href="/post/post_list_view" class="btn btn-dark">목록으로</a>
 				<button type="button" id="postUpdateBtn" class="btn btn-primary ml-2" data-post-id="${post.id}">수정</button>
@@ -81,6 +81,33 @@ $(document).ready(function() {
 			}
 			, error: function(e) {
 				alert("메모 수정에 실패했습니다.");
+			}
+		});
+	});
+	
+	// 삭제 버튼 클릭
+	$('#postDeleteBtn').on('click', function() {
+		let postId = $(this).data('post-id');
+		//alert(postId);
+		
+		// ajax 호출 => 삭제 db
+		$.ajax({
+			// request
+			type: "delete"
+			, url: "/post/delete"
+			, data: {"postId":postId}
+		
+			// response
+			, success: function(data) {
+				if (data.code == 100) {
+					alert("삭제 되었습니다.");
+					location.href="/post/post_list_view"; // 성공하면 글 목록으로 이동
+				} else {
+					alert(data.errorMessage);
+				}
+			}
+			, error: function(e) {
+				alert("메모를 삭제하는데 실패했습니다.");
 			}
 		});
 	});
